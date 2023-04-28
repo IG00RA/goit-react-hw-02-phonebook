@@ -11,14 +11,6 @@ export class App extends Component {
   };
 
   addContact = newContact => {
-    const normalizeName = newContact.name.toLowerCase();
-    if (
-      this.state.contacts.find(
-        contact => contact.name.toLowerCase() === normalizeName
-      )
-    ) {
-      return alert(`${newContact.name} is already in contact list`);
-    }
     this.setState(prevState => ({
       contacts: [...prevState.contacts, newContact],
     }));
@@ -55,7 +47,7 @@ export class App extends Component {
       <>
         <GlobalStyle />
         <h1>Phonebook</h1>
-        <ContactForm onAdd={addContact} />
+        <ContactForm onAdd={addContact} contacts={state.contacts} />
         <h2>Contacts</h2>
         <Filter onChange={findContact} value={state.filter} />
         <ContactList

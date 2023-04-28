@@ -3,7 +3,7 @@ import { Formik, Field } from 'formik';
 import { nanoid } from 'nanoid';
 import { Form } from './ContactForm.styled';
 
-export const ContactForm = ({ onAdd }) => {
+export const ContactForm = ({ onAdd, contacts }) => {
   return (
     <Formik
       initialValues={{
@@ -11,6 +11,12 @@ export const ContactForm = ({ onAdd }) => {
         number: '',
       }}
       onSubmit={(values, { resetForm }) => {
+        const normalizeName = values.name.toLowerCase();
+        if (
+          contacts.find(contact => contact.name.toLowerCase() === normalizeName)
+        ) {
+          return alert(`${values.name} is already in contact list`);
+        }
         const newContact = {
           ...values,
           id: nanoid(),
